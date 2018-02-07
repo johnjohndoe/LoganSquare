@@ -30,6 +30,7 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
     private Filer mFiler;
     private List<Processor> mProcessors;
     private Map<String, JsonObjectHolder> mJsonObjectMap;
+    private Map<String, JsonEnumHolder> mJsonEnumMap;
 
     @Override
     public synchronized void init(ProcessingEnvironment env) {
@@ -39,6 +40,7 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
         mTypeUtils = env.getTypeUtils();
         mFiler = env.getFiler();
         mJsonObjectMap = new HashMap<>();
+        mJsonEnumMap = new HashMap<>();
         mProcessors = Processor.allProcessors(processingEnv);
     }
 
@@ -60,7 +62,7 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> elements, RoundEnvironment env) {
         try {
             for (Processor processor : mProcessors) {
-                processor.findAndParseObjects(env, mJsonObjectMap, mElementUtils, mTypeUtils);
+                processor.findAndParseObjects(env, mJsonObjectMap, mJsonEnumMap, mElementUtils, mTypeUtils);
             }
 
             for (Map.Entry<String, JsonObjectHolder> entry : mJsonObjectMap.entrySet()) {
@@ -69,16 +71,17 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
 
                 if (!jsonObjectHolder.fileCreated) {
                     jsonObjectHolder.fileCreated = true;
+                    writeFile(fqcn, new ObjectMapperInjector(jsonObjectHolder));
+                }
+            }
 
-                    try {
-                        JavaFileObject jfo = mFiler.createSourceFile(fqcn);
-                        Writer writer = jfo.openWriter();
-                        writer.write(new ObjectMapperInjector(jsonObjectHolder).getJavaClassFile());
-                        writer.flush();
-                        writer.close();
-                    } catch (IOException e) {
-                        error(fqcn, "Exception occurred while attempting to write injector for type %s. Exception message: %s", fqcn, e.getMessage());
-                    }
+            for (Map.Entry<String, JsonEnumHolder> entry : mJsonEnumMap.entrySet()) {
+                String fqcn = entry.getKey();
+                JsonEnumHolder jsonEnumHolder = entry.getValue();
+
+                if (!jsonEnumHolder.fileCreated) {
+                    jsonEnumHolder.fileCreated = true;
+                    writeFile(fqcn, new EnumConverterInjector(jsonEnumHolder));
                 }
             }
 
@@ -88,6 +91,18 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
             e.printStackTrace(new PrintWriter(stackTrace));
             error("Exception while processing Json classes. Stack trace incoming:\n%s", stackTrace.toString());
             return false;
+        }
+    }
+
+    private void writeFile(String fqcn, Injector injector) {
+        try {
+            JavaFileObject jfo = mFiler.createSourceFile(fqcn);
+            Writer writer = jfo.openWriter();
+            writer.write(injector.getJavaClassFile());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            error(fqcn, "Exception occurred while attempting to write code for %s. Exception message: %s", fqcn, e.getMessage());
         }
     }
 
