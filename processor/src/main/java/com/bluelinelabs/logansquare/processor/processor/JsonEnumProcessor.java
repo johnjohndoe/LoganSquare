@@ -11,6 +11,8 @@ import com.bluelinelabs.logansquare.processor.JsonObjectHolder;
 import com.bluelinelabs.logansquare.processor.TextUtils;
 import com.bluelinelabs.logansquare.processor.TypeUtils;
 import com.squareup.javapoet.TypeName;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -25,8 +27,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-
-import javafx.util.Pair;
 
 import static com.bluelinelabs.logansquare.processor.JsonEnumHolder.JsonEnumHolderBuilder;
 import static com.bluelinelabs.logansquare.processor.JsonEnumHolder.ValueType;
@@ -109,28 +109,28 @@ public class JsonEnumProcessor extends Processor {
     private Pair<ValueType, Object> extractObjectFromEnumValue(Element enumValue, JsonEnum.ValueNamingPolicy valueNamingPolicy) {
         JsonStringValue stringAnnotation = enumValue.getAnnotation(JsonStringValue.class);
         if (stringAnnotation != null) {
-            return new Pair<ValueType, Object>(ValueType.STRING, stringAnnotation.value());
+            return new ImmutablePair<ValueType, Object>(ValueType.STRING, stringAnnotation.value());
         }
         JsonNumberValue numberAnnotation = enumValue.getAnnotation(JsonNumberValue.class);
         if (numberAnnotation != null) {
-            return new Pair<ValueType, Object>(ValueType.NUMBER, numberAnnotation.value());
+            return new ImmutablePair<ValueType, Object>(ValueType.NUMBER, numberAnnotation.value());
         }
         JsonBooleanValue booleanAnnotation = enumValue.getAnnotation(JsonBooleanValue.class);
         if (booleanAnnotation != null) {
-            return new Pair<ValueType, Object>(ValueType.BOOLEAN, booleanAnnotation.value());
+            return new ImmutablePair<ValueType, Object>(ValueType.BOOLEAN, booleanAnnotation.value());
         }
         if (enumValue.getAnnotation(JsonNullValue.class) != null) {
-            return new Pair<ValueType, Object>(null, null);
+            return new ImmutablePair<ValueType, Object>(null, null);
         }
         String valueString = enumValue.getSimpleName().toString();
         switch (valueNamingPolicy) {
             case VALUE_NAME:
-                return new Pair<ValueType, Object>(ValueType.STRING, valueString);
+                return new ImmutablePair<ValueType, Object>(ValueType.STRING, valueString);
             case LOWER_CASE_WITH_UNDERSCORES:
                 if (TextUtils.containsLowerCaseSymbols(valueString)) {
-                    return new Pair<ValueType, Object>(ValueType.STRING, TextUtils.toLowerCaseWithUnderscores(valueString));
+                    return new ImmutablePair<ValueType, Object>(ValueType.STRING, TextUtils.toLowerCaseWithUnderscores(valueString));
                 } else {
-                    return new Pair<ValueType, Object>(ValueType.STRING, valueString.toLowerCase());
+                    return new ImmutablePair<ValueType, Object>(ValueType.STRING, valueString.toLowerCase());
                 }
             default:
                 throw new IllegalStateException("Unknown valueNamingPolicy: " + valueNamingPolicy);
