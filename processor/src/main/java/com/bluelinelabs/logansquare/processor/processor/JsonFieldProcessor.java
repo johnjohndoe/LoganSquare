@@ -57,7 +57,7 @@ public class JsonFieldProcessor extends Processor {
     }
 
     private void processJsonFieldAnnotation(Element element, Map<String, JsonObjectHolder> jsonObjectMap, Elements elements, Types types) {
-        if (!isJsonFieldFieldAnnotationValid(element, elements)) {
+        if (!isJsonFieldAnnotationValid(element, elements)) {
             return;
         }
 
@@ -94,7 +94,7 @@ public class JsonFieldProcessor extends Processor {
         ensureTypeConverterClassValid(typeConverterType, elements, types);
     }
 
-    private boolean isJsonFieldFieldAnnotationValid(Element element, Elements elements) {
+    private boolean isJsonFieldAnnotationValid(Element element, Elements elements) {
         TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
         Annotation objectAnnotation = enclosingElement.getAnnotation(JsonObject.class);

@@ -1,7 +1,6 @@
 package com.bluelinelabs.logansquare.processor.type.field;
 
 import com.bluelinelabs.logansquare.processor.type.Type;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.MethodSpec.Builder;
 import com.squareup.javapoet.TypeName;
 
