@@ -10,7 +10,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class SimpleWrapperModel$$JsonObjectMapper extends JsonMapper<SimpleWrapperModel> {
     private static final JsonMapper<SimpleWrapperModel.WrappedClass> COM_BLUELINELABS_LOGANSQUARE_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__JSONOBJECTMAPPER = LoganSquare.mapperFor(SimpleWrapperModel.WrappedClass.class);
 

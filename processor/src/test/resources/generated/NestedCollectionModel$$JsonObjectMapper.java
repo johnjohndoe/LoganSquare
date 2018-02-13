@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class NestedCollectionModel$$JsonObjectMapper extends JsonMapper<NestedCollectionModel> {
     private static final JsonMapper<NestedCollectionModel.ModelForCollection> MODEL_GOOD_NESTEDCOLLECTIONMODEL_MODELFORCOLLECTION__JSONOBJECTMAPPER = LoganSquare.mapperFor(NestedCollectionModel.ModelForCollection.class);
 

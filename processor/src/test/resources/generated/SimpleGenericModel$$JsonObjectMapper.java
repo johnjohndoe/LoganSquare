@@ -14,7 +14,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.Date;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class SimpleGenericModel$$JsonObjectMapper<T> extends JsonMapper<SimpleGenericModel<T>> {
   private static TypeConverter<Date> java_util_Date_type_converter;
 

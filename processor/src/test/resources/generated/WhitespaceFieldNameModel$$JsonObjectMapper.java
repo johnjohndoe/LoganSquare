@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class WhitespaceFieldNameModel$$JsonObjectMapper extends JsonMapper<WhitespaceFieldNameModel> {
   @Override
   public WhitespaceFieldNameModel parse(JsonParser jsonParser) throws IOException {
