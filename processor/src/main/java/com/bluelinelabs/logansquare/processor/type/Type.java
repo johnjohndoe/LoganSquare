@@ -45,7 +45,7 @@ public abstract class Type {
         } else if (!hasTypeConverter && !genericClassTypeMirror.toString().equals(typeMirror.toString())) {
             type = CollectionType.collectionTypeFor(typeMirror, genericClassTypeMirror, elements, types);
             if (type == null) {
-                type = OptionalFieldType.typeFor(typeMirror, typeConverterType, elements, types);
+                type = OptionalFieldType.typeFor(typeMirror, genericClassTypeMirror, elements, types);
             }
             if (type == null) {
                 if (typeMirror.toString().contains("?")) {

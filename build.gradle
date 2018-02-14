@@ -12,6 +12,10 @@ allprojects {
 
     group = 'com.bluelinelabs'
     version = '1.4.1'
+
+    repositories {
+        maven { url "https://maven.google.com" }
+    }
 }
 
 subprojects {
@@ -46,7 +50,6 @@ subprojects {
                 from components.java
                 artifact sourcesJar
                 artifact javadocJar
-                artifactId project.ext.artifactId
 
                 pom.withXml {
                     def node = asNode()

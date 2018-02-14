@@ -1,5 +1,7 @@
 package com.bluelinelabs.logansquare.processor.type.field;
 
+import android.support.annotation.NonNull;
+import com.bluelinelabs.logansquare.NonNullOptionalField;
 import com.bluelinelabs.logansquare.OptionalField;
 import com.bluelinelabs.logansquare.processor.ObjectMapperInjector;
 import com.bluelinelabs.logansquare.processor.TypeUtils;
@@ -13,15 +15,43 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import java.util.List;
 
-public class OptionalFieldType extends FieldType {
+public class OptionalFieldType<T extends Class<?>> extends FieldType {
 
-    public static FieldType typeFor(TypeMirror typeMirror, TypeMirror genericClassTypeMirror, Elements elements, Types types) {
-        return null;
+    private static final String VARIABLE_NAME = "value";
+
+    private final T optionalClass;
+
+    public static FieldType typeFor(
+            final TypeMirror typeMirror,
+            final TypeMirror genericClassTypeMirror,
+            final Elements elements,
+            final Types types
+    ) {
+        final Class<? extends OptionalField> cls;
+        switch (genericClassTypeMirror.toString()) {
+            case "com.bluelinelabs.logansquare.OptionalField": {
+                cls = OptionalField.class;
+                break;
+            }
+            case "com.bluelinelabs.logansquare.NonNullOptionalField": {
+                cls = NonNullOptionalField.class;
+                break;
+            }
+            default:
+                return null;
+        }
+        @SuppressWarnings("unchecked") final OptionalFieldType optionalFieldType = new OptionalFieldType(cls);
+        optionalFieldType.addParameterTypes(TypeUtils.getParameterizedTypes(typeMirror), elements, types);
+        return optionalFieldType;
+    }
+
+    public OptionalFieldType(@NonNull final T optionalClass) {
+        this.optionalClass = optionalClass;
     }
 
     @Override
     public TypeName getTypeName() {
-        return ClassName.get(OptionalField.class);
+        return ClassName.get(optionalClass);
     }
 
     @Override
@@ -35,14 +65,43 @@ public class OptionalFieldType extends FieldType {
     }
 
     @Override
-    public void parse(MethodSpec.Builder builder, int depth, String setter, Object... setterFormatArgs) {
-
+    public void parse(
+            final MethodSpec.Builder builder,
+            final int depth,
+            final String setter,
+            final Object... setterFormatArgs
+    ) {
+        final Type parameterType = parameterTypes.get(0);
+        builder.addStatement("final $T $L", parameterType.getTypeName(), VARIABLE_NAME);
+        parameterType.parse(builder, depth + 1, "$L = $L", VARIABLE_NAME);
+        final String newSetter = replaceLastLiteral(setter, "$T.value($L)");
+        builder.addStatement(newSetter, expandStringArgs(setterFormatArgs, getTypeName(), VARIABLE_NAME));
     }
 
     @Override
-    public void serialize(MethodSpec.Builder builder, int depth, String fieldName, List<String> processedFieldNames, String getter, boolean isObjectProperty, boolean checkIfNull, boolean writeIfNull, boolean writeCollectionElementIfNull) {
+    public void serialize(
+            final MethodSpec.Builder builder,
+            final int depth,
+            final String fieldName,
+            final List<String> processedFieldNames,
+            final String getter,
+            final boolean isObjectProperty,
+            final boolean checkIfNull,
+            final boolean writeIfNull,
+            final boolean writeCollectionElementIfNull
+    ) {
         final Type parameterType = parameterTypes.get(0);
-
+        builder.beginControlFlow("if ($L != null && !$L.isEmpty())", getter, getter);
+        if (isObjectProperty) {
+            builder.addStatement("$L.writeFieldName($S)", ObjectMapperInjector.JSON_GENERATOR_VARIABLE_NAME, fieldName);
+        }
+        final String valueGetter = String.format("%s.getValue()", getter);
+        builder.beginControlFlow("if ($L != null)", valueGetter);
+        parameterType.serialize(builder, depth + 1, fieldName, processedFieldNames, valueGetter, false, false, false, writeCollectionElementIfNull);
+        builder.nextControlFlow("else")
+                .addStatement("$L.writeNull()", ObjectMapperInjector.JSON_GENERATOR_VARIABLE_NAME)
+                .endControlFlow()
+                .endControlFlow();
     }
 
 }
