@@ -1,6 +1,5 @@
 package com.bluelinelabs.logansquare.processor.type.field;
 
-import android.support.annotation.NonNull;
 import com.bluelinelabs.logansquare.NonNullOptionalField;
 import com.bluelinelabs.logansquare.OptionalField;
 import com.bluelinelabs.logansquare.processor.ObjectMapperInjector;
@@ -45,7 +44,7 @@ public class OptionalFieldType<T extends Class<?>> extends FieldType {
         return optionalFieldType;
     }
 
-    public OptionalFieldType(@NonNull final T optionalClass) {
+    public OptionalFieldType(final T optionalClass) {
         this.optionalClass = optionalClass;
     }
 
