@@ -11,7 +11,7 @@ allprojects {
     apply plugin: 'idea'
 
     group = 'com.bluelinelabs'
-    version = '1.4.1'
+    version = '1.4.2'
 
     repositories {
         maven { url "https://maven.google.com" }
@@ -115,8 +115,4 @@ subprojects {
             }
         }
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.9'
 }

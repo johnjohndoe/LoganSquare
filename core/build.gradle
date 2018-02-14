@@ -3,6 +3,12 @@ apply plugin: 'java'
 ext.artifactId = 'logansquare'
 
 dependencies {
-    compile 'com.android.support:support-annotations:27.0.2'
+    implementation 'com.android.support:support-annotations:27.0.2'
     compile 'com.fasterxml.jackson.core:jackson-core:2.5.1'
+}
+
+jar {
+    from {
+        configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
