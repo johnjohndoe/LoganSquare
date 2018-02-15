@@ -3,6 +3,8 @@ package com.bluelinelabs.logansquare;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.Arrays;
+
 public class JsonOptional<T> {
 
     @NonNull
@@ -25,12 +27,30 @@ public class JsonOptional<T> {
     }
 
     @Nullable
-    public T getValue() {
+    public T get() {
         return value;
     }
 
     public boolean isEmpty() {
         return empty;
+    }
+
+    @Override
+    public boolean equals(@Nullable final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        final JsonOptional<?> that = (JsonOptional<?>) object;
+        return empty == that.empty
+                && value == that.value || (value != null && value.equals(that.value));
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{empty, value});
     }
 
 }
