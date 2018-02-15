@@ -94,7 +94,7 @@ public class JsonOptionalType<T extends Class<?>> extends FieldType {
         if (isObjectProperty) {
             builder.addStatement("$L.writeFieldName($S)", ObjectMapperInjector.JSON_GENERATOR_VARIABLE_NAME, fieldName);
         }
-        final String valueGetter = String.format("%s.getValue()", getter);
+        final String valueGetter = String.format("%s.get()", getter);
         builder.beginControlFlow("if ($L != null)", valueGetter);
         parameterType.serialize(builder, depth + 1, fieldName, processedFieldNames, valueGetter, false, false, false, writeCollectionElementIfNull);
         builder.nextControlFlow("else")

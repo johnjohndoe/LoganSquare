@@ -57,16 +57,16 @@ public final class OptionalModel$$JsonObjectMapper extends JsonMapper<OptionalMo
     }
     if (object.jsonOptional != null && !object.jsonOptional.isEmpty()) {
       jsonGenerator.writeFieldName("jsonOptional");
-      if (object.jsonOptional.getValue() != null) {
-        jsonGenerator.writeBoolean(object.jsonOptional.getValue());
+      if (object.jsonOptional.get() != null) {
+        jsonGenerator.writeBoolean(object.jsonOptional.get());
       } else {
         jsonGenerator.writeNull();
       }
     }
     if (object.nonNullJsonOptional != null && !object.nonNullJsonOptional.isEmpty()) {
       jsonGenerator.writeFieldName("nonNullJsonOptional");
-      if (object.nonNullJsonOptional.getValue() != null) {
-        jsonGenerator.writeBoolean(object.nonNullJsonOptional.getValue());
+      if (object.nonNullJsonOptional.get() != null) {
+        jsonGenerator.writeBoolean(object.nonNullJsonOptional.get());
       } else {
         jsonGenerator.writeNull();
       }
