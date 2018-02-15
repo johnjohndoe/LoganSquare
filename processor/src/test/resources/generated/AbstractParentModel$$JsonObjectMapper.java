@@ -8,7 +8,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class AbstractParentModel$$JsonObjectMapper extends JsonMapper<AbstractParentModel> {
     @Override
     public AbstractParentModel parse(JsonParser jsonParser) throws IOException {

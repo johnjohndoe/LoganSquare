@@ -22,7 +22,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class SimpleCollectionModel$$JsonObjectMapper extends JsonMapper<SimpleCollectionModel> {
     private static final JsonMapper<SimpleCollectionModel.ModelForCollection> COM_BLUELINELABS_LOGANSQUARE_PROCESSOR_SIMPLECOLLECTIONMODEL_MODELFORCOLLECTION__JSONOBJECTMAPPER = LoganSquare.mapperFor(SimpleCollectionModel.ModelForCollection.class);
 

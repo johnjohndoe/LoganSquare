@@ -8,7 +8,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class DateModel$$JsonObjectMapper extends JsonMapper<DateModel> {
     protected static final DateModel.MyDateTypeConverter COM_BLUELINELABS_LOGANSQUARE_PROCESSOR_DATEMODEL_MYDATETYPECONVERTER = new DateModel.MyDateTypeConverter();
 

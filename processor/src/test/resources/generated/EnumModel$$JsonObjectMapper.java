@@ -8,7 +8,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 
-@SuppressWarnings("unsafe,unchecked")
+@SuppressWarnings({"unsafe", "unchecked"})
 public final class EnumModel$$JsonObjectMapper extends JsonMapper<EnumModel> {
     protected static final EnumModel.EnumTypeConverter COM_BLUELINELABS_LOGANSQUARE_PROCESSOR_ENUMMODEL_ENUMTYPECONVERTER = new EnumModel.EnumTypeConverter();
 
