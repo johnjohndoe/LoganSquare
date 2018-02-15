@@ -1,7 +1,7 @@
 package com.bluelinelabs.logansquare.processor.type.field;
 
-import com.bluelinelabs.logansquare.NonNullOptionalField;
-import com.bluelinelabs.logansquare.OptionalField;
+import com.bluelinelabs.logansquare.JsonOptional;
+import com.bluelinelabs.logansquare.NonNullJsonOptional;
 import com.bluelinelabs.logansquare.processor.ObjectMapperInjector;
 import com.bluelinelabs.logansquare.processor.TypeUtils;
 import com.bluelinelabs.logansquare.processor.type.Type;
@@ -14,7 +14,7 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import java.util.List;
 
-public class OptionalFieldType<T extends Class<?>> extends FieldType {
+public class JsonOptionalType<T extends Class<?>> extends FieldType {
 
     private static final String VARIABLE_NAME = "value";
 
@@ -26,25 +26,25 @@ public class OptionalFieldType<T extends Class<?>> extends FieldType {
             final Elements elements,
             final Types types
     ) {
-        final Class<? extends OptionalField> cls;
+        final Class<? extends JsonOptional> cls;
         switch (genericClassTypeMirror.toString()) {
-            case "com.bluelinelabs.logansquare.OptionalField": {
-                cls = OptionalField.class;
+            case "com.bluelinelabs.logansquare.JsonOptional": {
+                cls = JsonOptional.class;
                 break;
             }
-            case "com.bluelinelabs.logansquare.NonNullOptionalField": {
-                cls = NonNullOptionalField.class;
+            case "com.bluelinelabs.logansquare.NonNullJsonOptional": {
+                cls = NonNullJsonOptional.class;
                 break;
             }
             default:
                 return null;
         }
-        @SuppressWarnings("unchecked") final OptionalFieldType optionalFieldType = new OptionalFieldType(cls);
-        optionalFieldType.addParameterTypes(TypeUtils.getParameterizedTypes(typeMirror), elements, types);
-        return optionalFieldType;
+        @SuppressWarnings("unchecked") final JsonOptionalType jsonOptionalType = new JsonOptionalType(cls);
+        jsonOptionalType.addParameterTypes(TypeUtils.getParameterizedTypes(typeMirror), elements, types);
+        return jsonOptionalType;
     }
 
-    public OptionalFieldType(final T optionalClass) {
+    public JsonOptionalType(final T optionalClass) {
         this.optionalClass = optionalClass;
     }
 

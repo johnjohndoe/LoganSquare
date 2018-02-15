@@ -3,7 +3,7 @@ package com.bluelinelabs.logansquare.processor.type;
 import com.bluelinelabs.logansquare.processor.type.collection.ArrayCollectionType;
 import com.bluelinelabs.logansquare.processor.type.collection.CollectionType;
 import com.bluelinelabs.logansquare.processor.type.field.FieldType;
-import com.bluelinelabs.logansquare.processor.type.field.OptionalFieldType;
+import com.bluelinelabs.logansquare.processor.type.field.JsonOptionalType;
 import com.bluelinelabs.logansquare.processor.type.field.ParameterizedTypeField;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -45,7 +45,7 @@ public abstract class Type {
         } else if (!hasTypeConverter && !genericClassTypeMirror.toString().equals(typeMirror.toString())) {
             type = CollectionType.collectionTypeFor(typeMirror, genericClassTypeMirror, elements, types);
             if (type == null) {
-                type = OptionalFieldType.typeFor(typeMirror, genericClassTypeMirror, elements, types);
+                type = JsonOptionalType.typeFor(typeMirror, genericClassTypeMirror, elements, types);
             }
             if (type == null) {
                 if (typeMirror.toString().contains("?")) {

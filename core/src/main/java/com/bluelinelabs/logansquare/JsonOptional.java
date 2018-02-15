@@ -3,23 +3,23 @@ package com.bluelinelabs.logansquare;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class OptionalField<T> {
+public class JsonOptional<T> {
 
     @NonNull
-    public static <T> OptionalField<T> empty() {
-        return new OptionalField<>(true, null);
+    public static <T> JsonOptional<T> empty() {
+        return new JsonOptional<>(true, null);
     }
 
     @NonNull
-    public static <T> OptionalField<T> value(@Nullable final T value) {
-        return new OptionalField<>(false, value);
+    public static <T> JsonOptional<T> value(@Nullable final T value) {
+        return new JsonOptional<>(false, value);
     }
 
     private final boolean empty;
     @Nullable
     private final T value;
 
-    protected OptionalField(final boolean empty, @Nullable final T value) {
+    protected JsonOptional(final boolean empty, @Nullable final T value) {
         this.empty = empty;
         this.value = value;
     }

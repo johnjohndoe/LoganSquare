@@ -1,7 +1,7 @@
 package com.bluelinelabs.logansquare.processor.model;
 
-import com.bluelinelabs.logansquare.NonNullOptionalField;
-import com.bluelinelabs.logansquare.OptionalField;
+import com.bluelinelabs.logansquare.JsonOptional;
+import com.bluelinelabs.logansquare.NonNullJsonOptional;
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
@@ -11,10 +11,10 @@ public class OptionalModel {
     @JsonField(name = "simpleField")
     public boolean simpleField;
 
-    @JsonField(name = "nonNullOptionalField")
-    public NonNullOptionalField<Boolean> nonNullOptionalField;
+    @JsonField(name = "nonNullJsonOptional")
+    public NonNullJsonOptional<Boolean> nonNullJsonOptional;
 
-    @JsonField(name = "optionalField")
-    public OptionalField<Boolean> optionalField;
+    @JsonField(name = "jsonOptional")
+    public JsonOptional<Boolean> jsonOptional;
 
 }

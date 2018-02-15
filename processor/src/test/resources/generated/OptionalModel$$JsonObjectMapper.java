@@ -1,8 +1,8 @@
 package com.bluelinelabs.logansquare.processor.model;
 
 import com.bluelinelabs.logansquare.JsonMapper;
-import com.bluelinelabs.logansquare.NonNullOptionalField;
-import com.bluelinelabs.logansquare.OptionalField;
+import com.bluelinelabs.logansquare.JsonOptional;
+import com.bluelinelabs.logansquare.NonNullJsonOptional;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -34,37 +34,39 @@ public final class OptionalModel$$JsonObjectMapper extends JsonMapper<OptionalMo
   }
 
   @Override
-  public void parseField(OptionalModel instance, String fieldName, JsonParser jsonParser) throws IOException {
-    if ("nonNullOptionalField".equals(fieldName)) {
+  public void parseField(OptionalModel instance, String fieldName, JsonParser jsonParser) throws
+          IOException {
+    if ("jsonOptional".equals(fieldName)) {
       final Boolean value;
       value = jsonParser.getCurrentToken() == JsonToken.VALUE_NULL ? null : Boolean.valueOf(jsonParser.getValueAsBoolean());
-      instance.nonNullOptionalField = NonNullOptionalField.value(value);
-    } else if ("optionalField".equals(fieldName)) {
+      instance.jsonOptional = JsonOptional.value(value);
+    } else if ("nonNullJsonOptional".equals(fieldName)) {
       final Boolean value;
       value = jsonParser.getCurrentToken() == JsonToken.VALUE_NULL ? null : Boolean.valueOf(jsonParser.getValueAsBoolean());
-      instance.optionalField = OptionalField.value(value);
+      instance.nonNullJsonOptional = NonNullJsonOptional.value(value);
     } else if ("simpleField".equals(fieldName)) {
       instance.simpleField = jsonParser.getValueAsBoolean();
     }
   }
 
   @Override
-  public void serialize(OptionalModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
+  public void serialize(OptionalModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd)
+          throws IOException {
     if (writeStartAndEnd) {
       jsonGenerator.writeStartObject();
     }
-    if (object.nonNullOptionalField != null && !object.nonNullOptionalField.isEmpty()) {
-      jsonGenerator.writeFieldName("nonNullOptionalField");
-      if (object.nonNullOptionalField.getValue() != null) {
-        jsonGenerator.writeBoolean(object.nonNullOptionalField.getValue());
+    if (object.jsonOptional != null && !object.jsonOptional.isEmpty()) {
+      jsonGenerator.writeFieldName("jsonOptional");
+      if (object.jsonOptional.getValue() != null) {
+        jsonGenerator.writeBoolean(object.jsonOptional.getValue());
       } else {
         jsonGenerator.writeNull();
       }
     }
-    if (object.optionalField != null && !object.optionalField.isEmpty()) {
-      jsonGenerator.writeFieldName("optionalField");
-      if (object.optionalField.getValue() != null) {
-        jsonGenerator.writeBoolean(object.optionalField.getValue());
+    if (object.nonNullJsonOptional != null && !object.nonNullJsonOptional.isEmpty()) {
+      jsonGenerator.writeFieldName("nonNullJsonOptional");
+      if (object.nonNullJsonOptional.getValue() != null) {
+        jsonGenerator.writeBoolean(object.nonNullJsonOptional.getValue());
       } else {
         jsonGenerator.writeNull();
       }

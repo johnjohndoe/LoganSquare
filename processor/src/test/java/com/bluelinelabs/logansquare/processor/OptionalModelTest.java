@@ -38,7 +38,7 @@ public class OptionalModelTest {
 
     @Test
     public void reserialization2() {
-        String json = "{\"optionalField\":null,\"simpleField\":true}";
+        String json = "{\"jsonOptional\":null,\"simpleField\":true}";
 
         String reserialized = null;
         try {
@@ -52,7 +52,7 @@ public class OptionalModelTest {
 
     @Test
     public void reserialization3() {
-        String json = "{\"nonNullOptionalField\":true,\"optionalField\":null,\"simpleField\":true}";
+        String json = "{\"jsonOptional\":null,\"nonNullJsonOptional\":true,\"simpleField\":true}";
 
         String reserialized = null;
         try {
