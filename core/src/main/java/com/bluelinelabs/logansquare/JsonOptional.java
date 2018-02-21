@@ -3,9 +3,10 @@ package com.bluelinelabs.logansquare;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class JsonOptional<T> {
+public class JsonOptional<T> implements Serializable {
 
     @NonNull
     public static <T> JsonOptional<T> empty() {
