@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.5'
 
     // GSON library for comparison
-    implementation 'com.google.code.gson:gson:2.3.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // Moshi library for camparison
     implementation 'com.squareup.moshi:moshi:1.0.0'
