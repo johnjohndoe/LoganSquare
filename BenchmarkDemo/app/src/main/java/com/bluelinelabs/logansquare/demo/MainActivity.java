@@ -7,12 +7,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.beust.klaxon.Klaxon;
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.bluelinelabs.logansquare.demo.model.Response;
 import com.bluelinelabs.logansquare.demo.parsetasks.AsonParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.GsonParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.JacksonDatabindParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.JacksonJrParser;
+import com.bluelinelabs.logansquare.demo.parsetasks.KlaxonParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.LoganSquareParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.MoshiParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.ParseResult;
@@ -71,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
         mResponsesToSerialize = getResponsesToParse();
 
         mBarChart = (BarChart)findViewById(R.id.bar_chart);
-        mBarChart.setColumnTitles(new String[] {"GSON", "Jackson", "LoganSquare", "Moshi", "Ason", "JacksonJr"});
+        mBarChart.setColumnTitles(new String[] {"GSON", "Jackson", "LoganSquare", "Moshi", "Ason", "JacksonJr", "Klaxon"});
 
         findViewById(R.id.btn_parse_tests).setOnClickListener(new OnClickListener() {
             @Override
@@ -95,6 +97,7 @@ public class MainActivity extends ActionBarActivity {
         Gson gson = new Gson();
         ObjectMapper objectMapper = new ObjectMapper();
         Moshi moshi = new Moshi.Builder().build();
+        Klaxon klaxon = new Klaxon();
         List<Parser> parsers = new ArrayList<>();
         for (String jsonString : mJsonStringsToParse) {
             for (int iteration = 0; iteration < ITERATIONS; iteration++) {
@@ -104,6 +107,7 @@ public class MainActivity extends ActionBarActivity {
                 parsers.add(new LoganSquareParser(mParseListener, jsonString));
                 parsers.add(new AsonParser(mParseListener, jsonString));
                 parsers.add(new JacksonJrParser(mParseListener, jsonString));
+                parsers.add(new KlaxonParser(mParseListener, jsonString, klaxon));
             }
         }
 
@@ -168,6 +172,8 @@ public class MainActivity extends ActionBarActivity {
             mBarChart.addTiming(section, 4, parseResult.runDuration / 1000f);
         } else if (parser instanceof JacksonJrParser) {
             mBarChart.addTiming(section, 5, parseResult.runDuration / 1000f);
+        } else if (parser instanceof KlaxonParser && section != -1) {
+            mBarChart.addTiming(section, 6, parseResult.runDuration / 1000f);
         }
     }
 

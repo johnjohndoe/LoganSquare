@@ -17,7 +17,7 @@ import java.util.List;
 public class BarChart extends View {
 
     private static final int SECTION_COUNT = 4;
-    private static final int COLUMNS_PER_SECTION = 6;
+    private static final int COLUMNS_PER_SECTION = 7;
 
     private final Section[] mSections = new Section[SECTION_COUNT];
     private final Rect mTextBounds = new Rect();
@@ -66,6 +66,9 @@ public class BarChart extends View {
         mPaints[5] = new Paint();
         mPaints[5].setColor(0xffd922a8);
 
+        mPaints[6] = new Paint();
+        mPaints[6].setColor(0xfffea9e8);
+
         mTextPaint = new TextPaint();
         mTextPaint.setColor(0xff555555);
         mTextPaint.setAntiAlias(true);
@@ -108,7 +111,9 @@ public class BarChart extends View {
     }
 
     public void addTiming(int section, int column, float timing) {
-        mSections[section].columns[column].addTiming(timing);
+        Section currentSection = mSections[section];
+        Column currentColumn = currentSection.columns[column];
+        currentColumn.addTiming(timing);
         invalidate();
     }
 
@@ -172,7 +177,7 @@ public class BarChart extends View {
 
         public Section() {
             title = "";
-            columns = new Column[] {new Column(), new Column(), new Column(), new Column(), new Column(), new Column()};
+            columns = new Column[] {new Column(), new Column(), new Column(), new Column(), new Column(), new Column(), new Column()};
         }
     }
 
