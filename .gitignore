@@ -23,3 +23,7 @@ pom.xml.*
 local.properties
 
 *.prefs
+
+# OS noise
+.DS_Store
+
