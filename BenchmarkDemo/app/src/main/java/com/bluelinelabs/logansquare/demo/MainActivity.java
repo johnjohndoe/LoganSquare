@@ -12,6 +12,7 @@ import com.bluelinelabs.logansquare.demo.model.Response;
 import com.bluelinelabs.logansquare.demo.parsetasks.AsonParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.GsonParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.JacksonDatabindParser;
+import com.bluelinelabs.logansquare.demo.parsetasks.JacksonJrParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.LoganSquareParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.MoshiParser;
 import com.bluelinelabs.logansquare.demo.parsetasks.ParseResult;
@@ -20,6 +21,7 @@ import com.bluelinelabs.logansquare.demo.parsetasks.Parser.ParseListener;
 import com.bluelinelabs.logansquare.demo.serializetasks.AsonSerializer;
 import com.bluelinelabs.logansquare.demo.serializetasks.GsonSerializer;
 import com.bluelinelabs.logansquare.demo.serializetasks.JacksonDatabindSerializer;
+import com.bluelinelabs.logansquare.demo.serializetasks.JacksonJrSerializer;
 import com.bluelinelabs.logansquare.demo.serializetasks.LoganSquareSerializer;
 import com.bluelinelabs.logansquare.demo.serializetasks.MoshiSerializer;
 import com.bluelinelabs.logansquare.demo.serializetasks.SerializeResult;
@@ -69,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
         mResponsesToSerialize = getResponsesToParse();
 
         mBarChart = (BarChart)findViewById(R.id.bar_chart);
-        mBarChart.setColumnTitles(new String[] {"GSON", "Jackson", "LoganSquare", "Moshi", "Ason"});
+        mBarChart.setColumnTitles(new String[] {"GSON", "Jackson", "LoganSquare", "Moshi", "Ason", "JacksonJr"});
 
         findViewById(R.id.btn_parse_tests).setOnClickListener(new OnClickListener() {
             @Override
@@ -101,6 +103,7 @@ public class MainActivity extends ActionBarActivity {
                 parsers.add(new MoshiParser(mParseListener, jsonString, moshi));
                 parsers.add(new LoganSquareParser(mParseListener, jsonString));
                 parsers.add(new AsonParser(mParseListener, jsonString));
+                parsers.add(new JacksonJrParser(mParseListener, jsonString));
             }
         }
 
@@ -124,6 +127,7 @@ public class MainActivity extends ActionBarActivity {
                 serializers.add(new LoganSquareSerializer(mSerializeListener, response));
                 serializers.add(new MoshiSerializer(mSerializeListener, response, moshi));
                 serializers.add(new AsonSerializer(mSerializeListener, response));
+                serializers.add(new JacksonJrSerializer(mSerializeListener, response));
             }
         }
 
@@ -162,6 +166,8 @@ public class MainActivity extends ActionBarActivity {
             mBarChart.addTiming(section, 3, parseResult.runDuration / 1000f);
         } else if (parser instanceof AsonParser) {
             mBarChart.addTiming(section, 4, parseResult.runDuration / 1000f);
+        } else if (parser instanceof JacksonJrParser) {
+            mBarChart.addTiming(section, 5, parseResult.runDuration / 1000f);
         }
     }
 
@@ -195,6 +201,8 @@ public class MainActivity extends ActionBarActivity {
             mBarChart.addTiming(section, 3, serializeResult.runDuration / 1000f);
         } else if (serializer instanceof AsonSerializer) {
 			mBarChart.addTiming(section, 4, serializeResult.runDuration / 1000f);
+        } else if (serializer instanceof JacksonJrSerializer) {
+            mBarChart.addTiming(section, 5, serializeResult.runDuration / 1000f);
         }
     }
 
