@@ -17,6 +17,7 @@ public class MoshiSerializer extends Serializer {
         try {
             return moshi.adapter(Response.class).toJson(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         } finally {
            System.gc();

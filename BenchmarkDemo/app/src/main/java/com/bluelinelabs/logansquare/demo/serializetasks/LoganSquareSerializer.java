@@ -14,6 +14,7 @@ public class LoganSquareSerializer extends Serializer {
         try {
             return LoganSquare.serialize(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         } finally {
             System.gc();

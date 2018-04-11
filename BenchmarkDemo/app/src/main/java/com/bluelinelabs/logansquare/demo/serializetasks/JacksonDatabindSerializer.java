@@ -17,6 +17,7 @@ public class JacksonDatabindSerializer extends Serializer {
         try {
             return objectMapper.writeValueAsString(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         } finally {
             System.gc();

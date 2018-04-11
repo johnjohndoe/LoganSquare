@@ -17,6 +17,7 @@ public class GsonSerializer extends Serializer {
         try {
             return gson.toJson(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         } finally {
             System.gc();
