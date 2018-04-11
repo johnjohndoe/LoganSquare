@@ -9,11 +9,10 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "27.0.3"
 
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -25,6 +24,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -35,21 +35,21 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:23.1.1'
 
     // LoganSquare annotation processor
-    apt 'com.bluelinelabs:logansquare-compiler:1.3.7'
+    annotationProcessor 'com.bluelinelabs:logansquare-compiler:1.3.7'
     // LoganSquare runtime library
-    compile 'com.bluelinelabs:logansquare:1.3.7'
+    implementation 'com.bluelinelabs:logansquare:1.3.7'
 
     // Jackson libraries for comparison
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.5.1'
 
     // GSON library for comparison
-    compile 'com.google.code.gson:gson:2.3.1'
+    implementation 'com.google.code.gson:gson:2.3.1'
 
     // Moshi library for camparison
-    compile 'com.squareup.moshi:moshi:1.0.0'
+    implementation 'com.squareup.moshi:moshi:1.0.0'
 }
